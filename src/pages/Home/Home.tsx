@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { People } from '@/data/people';
 import { Person } from '@/models';
+import { Checkbox } from '@mui/material';
 
 export interface HomeInterface { }
 
 const Home: React.FC<HomeInterface> = () => {
 	const [selectedPeople, setSelectedPeople] = useState<Person[]>([]);
+
+	const handlechange = (people: Person) => (eve: ChangeEvent<HTMLInputElement>) => {
+		const { checked } = eve.target;
+		setSelectedPeople(prevState => {
+			if (checked) {
+				return [...prevState, people];
+			}
+
+			return prevState.filter(p => p.id !== people.id);
+		});
+	};
 
 	const pageSize = 5;
 
@@ -15,11 +27,16 @@ const Home: React.FC<HomeInterface> = () => {
 			field: 'actions',
 			headerName: '',
 			width: 50,
-			renderCell: (params: GridRenderCellParams) => (
-				<>
-					{params.value}
-				</>
-			)
+			renderCell: (params: GridRenderCellParams) => {
+				const selected = selectedPeople.find(people => people.id === params.row.id);
+
+				return (
+					<Checkbox
+						checked={!!selected}
+						onChange={handlechange(params.row)}
+					/>
+				)
+			}
 		},
 		{
 			field: 'name',
