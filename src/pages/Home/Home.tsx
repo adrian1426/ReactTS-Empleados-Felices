@@ -25,6 +25,7 @@ const Home: React.FC<HomeInterface> = () => {
 	const columns: GridColDef[] = [
 		{
 			field: 'actions',
+			sortable: false,
 			headerName: '',
 			width: 50,
 			renderCell: (params: GridRenderCellParams) => {
