@@ -11,12 +11,14 @@ export const favoriteslice = createSlice({
     : initialState,
   reducers: {
     addFavorite: (state, action) => {
-      setLocalStorage(LocalStorageTypes.FAVORITES, state);
-      return [...state, action.payload];
+      const newState = [...state, action.payload];
+      setLocalStorage(LocalStorageTypes.FAVORITES, newState);
+      return newState;
     },
     removeFavorite: (state, action) => {
-      setLocalStorage(LocalStorageTypes.FAVORITES, state);
-      return state.filter((p: Person) => p.id !== action.payload.id);
+      const newState = state.filter((p: Person) => p.id !== action.payload.id);
+      setLocalStorage(LocalStorageTypes.FAVORITES, newState);
+      return newState;
     }
   }
 });
