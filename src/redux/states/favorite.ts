@@ -13,6 +13,12 @@ export const favoriteslice = createSlice({
     addFavorite: (state, action) => {
       setLocalStorage(LocalStorageTypes.FAVORITES, state);
       return action.payload;
+    },
+    removeFavorite: (state, action) => {
+      setLocalStorage(LocalStorageTypes.FAVORITES, state);
+      return action.payload;
     }
   }
 });
+
+export const { addFavorite, removeFavorite } = favoriteslice.actions;

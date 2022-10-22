@@ -1,16 +1,20 @@
 import React, { ChangeEvent, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { People } from '@/data/people';
 import { Person } from '@/models';
 import { Checkbox } from '@mui/material';
+import { addFavorite } from '@/redux/states';
 
 export interface HomeInterface { }
 
 const Home: React.FC<HomeInterface> = () => {
 	const [selectedPeople, setSelectedPeople] = useState<Person[]>([]);
+	const dispatch = useDispatch();
 
 	const handlechange = (people: Person) => (eve: ChangeEvent<HTMLInputElement>) => {
 		const { checked } = eve.target;
+
 		setSelectedPeople(prevState => {
 			if (checked) {
 				return [...prevState, people];
@@ -18,6 +22,8 @@ const Home: React.FC<HomeInterface> = () => {
 
 			return prevState.filter(p => p.id !== people.id);
 		});
+
+		dispatch(addFavorite(selectedPeople));
 	};
 
 	const pageSize = 5;

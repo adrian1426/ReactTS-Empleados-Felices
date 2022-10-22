@@ -16,3 +16,5 @@ export const pleopleSlice = createSlice({
     }
   }
 });
+
+export const { addPeople } = pleopleSlice.actions;
