@@ -70,6 +70,16 @@ const FavoriteTable = () => {
 					{params.value}
 				</>
 			)
+		},
+		{
+			field: 'levelOfHappiness',
+			headerName: 'Nivel felicidad',
+			flex: 1,
+			renderCell: (params: GridRenderCellParams) => (
+				<>
+					{params.value}
+				</>
+			)
 		}
 	];
 
