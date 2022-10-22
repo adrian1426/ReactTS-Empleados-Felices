@@ -1,15 +1,16 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { People } from '@/data/people';
 import { Person } from '@/models';
 import { Checkbox } from '@mui/material';
-import { addFavorite, removeFavorite } from '@/redux/states';
-import { AppStore } from '@/redux/store';
+import { addFavorite, addPeople, removeFavorite } from '@/redux/states';
+import store, { AppStore } from '@/redux/store';
 
 export interface HomeInterface { }
 
 const Home: React.FC<HomeInterface> = () => {
+	const dataPeople = store.getState().people;
 	const selectedPeople = useSelector((state: AppStore) => state.favorites);
 	const dispatch = useDispatch();
 
@@ -25,6 +26,10 @@ const Home: React.FC<HomeInterface> = () => {
 	};
 
 	const pageSize = 5;
+
+	useEffect(() => {
+		dispatch(addPeople(People));
+	}, []);
 
 	const columns: GridColDef[] = [
 		{
@@ -79,7 +84,7 @@ const Home: React.FC<HomeInterface> = () => {
 	return (
 		<DataGrid
 			columns={columns}
-			rows={People}
+			rows={dataPeople}
 			disableColumnSelector
 			disableSelectionOnClick
 			autoHeight
